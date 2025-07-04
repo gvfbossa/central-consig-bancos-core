@@ -64,6 +64,7 @@ public class ClienteService {
             existente.setNome(novoCliente.getNome());
             existente.setTelefone(novoCliente.getTelefone());
             existente.setCasa(novoCliente.isCasa());
+            existente.setGoogleSheet(novoCliente.getGoogleSheet());
             return clienteRepository.saveAndFlush(existente);
         } else {
             return clienteRepository.saveAndFlush(novoCliente);
@@ -96,6 +97,11 @@ public class ClienteService {
 
                 if (!Objects.equals(existente.isCasa(), clienteCsv.isCasa())) {
                     existente.setCasa(clienteCsv.isCasa());
+                    atualizado = true;
+                }
+
+                if (!Objects.equals(existente.getGoogleSheet(), clienteCsv.getGoogleSheet())) {
+                    existente.setGoogleSheet(clienteCsv.getGoogleSheet());
                     atualizado = true;
                 }
 
