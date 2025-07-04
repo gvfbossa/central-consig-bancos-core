@@ -24,9 +24,12 @@ public class GoogleSheet {
 
     private String url;
 
-    public GoogleSheet(String fileName, String url) {
+    private boolean preferencial;
+
+    public GoogleSheet(String fileName, String url, boolean preferencial) {
         this.fileName = fileName;
         this.url = url;
+        this.preferencial = preferencial;
     }
 
 }

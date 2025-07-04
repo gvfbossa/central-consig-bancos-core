@@ -25,6 +25,10 @@ public class Cliente {
     private String telefone;
     private boolean casa;
 
+    @ManyToOne(fetch = FetchType.LAZY)
+    @JoinColumn(name = "google_sheet_id")
+    private GoogleSheet googleSheet;
+
     @OneToMany(mappedBy = "cliente", cascade = CascadeType.ALL, orphanRemoval = true, fetch = FetchType.EAGER)
     @JsonManagedReference
     private List<Vinculo> vinculos = new ArrayList<>();
