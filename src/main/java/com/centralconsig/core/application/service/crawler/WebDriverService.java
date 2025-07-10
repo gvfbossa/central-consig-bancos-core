@@ -48,7 +48,7 @@ public class WebDriverService {
 
     public void fecharDriver(WebDriver driver) {
         try {
-            driver.close();
+            driver.quit();
         } catch (Exception ignored){}
     }
 
