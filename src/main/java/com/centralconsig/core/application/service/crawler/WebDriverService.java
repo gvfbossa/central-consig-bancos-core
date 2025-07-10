@@ -1,5 +1,6 @@
 package com.centralconsig.core.application.service.crawler;
 
+import org.openqa.selenium.TimeoutException;
 import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
@@ -11,6 +12,10 @@ import java.nio.file.Paths;
 import java.time.Duration;
 import java.util.HashMap;
 import java.util.Map;
+import java.util.concurrent.ExecutorService;
+import java.util.concurrent.Executors;
+import java.util.concurrent.Future;
+import java.util.concurrent.TimeUnit;
 
 @Service
 public class WebDriverService {
@@ -48,8 +53,29 @@ public class WebDriverService {
 
     public void fecharDriver(WebDriver driver) {
         try {
-            driver.quit();
-        } catch (Exception ignored){}
+            if (driver != null) {
+                driver.close();
+            }
+        } catch (Exception ignored) {}
+
+        ExecutorService executor = Executors.newSingleThreadExecutor();
+        WebDriver finalDriver = driver;
+        Future<?> future = executor.submit(() -> {
+            try {
+                if (finalDriver != null) {
+                    finalDriver.quit();
+                }
+            } catch (Exception ignored) {}
+        });
+
+        try {
+            future.get(3, TimeUnit.SECONDS);
+        } catch (Exception ignored) {
+        } finally {
+            executor.shutdownNow();
+            driver = null;
+        }
     }
+
 
 }
