@@ -15,7 +15,7 @@ public class WebConfig {
     @Bean
     public SecurityFilterChain securityFilterChain(HttpSecurity http) throws Exception {
         CorsConfiguration config = new CorsConfiguration();
-        config.addAllowedOriginPattern("*");
+        config.addAllowedOrigin("https://centralconsig-margens-propostas.bossawebsolutions.com.br");
         config.setAllowCredentials(false);
         config.addAllowedMethod("GET");
         config.addAllowedMethod("POST");

@@ -12,7 +12,7 @@ import lombok.Setter;
 @Entity
 @Getter
 @Setter
-@EqualsAndHashCode(of = {"fileName", "url"})
+@EqualsAndHashCode(of = {"id"})
 @NoArgsConstructor
 public class GoogleSheet {
 
