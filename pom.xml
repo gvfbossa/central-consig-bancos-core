@@ -13,7 +13,7 @@
 
 	<groupId>com.centralconsig.core</groupId>
 	<artifactId>central-consig-bancos-core</artifactId>
-	<version>1.0.6</version>
+	<version>1.0.7</version>
 	<packaging>jar</packaging>
 
 	<name>central-consig-bancos-core</name>
