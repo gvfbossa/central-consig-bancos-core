@@ -17,24 +17,26 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 
     List<Cliente> findByCpfIn(Set<String> cpfs);
 
-    @Query(value = """
-    SELECT DISTINCT c.*
-    FROM cliente c
-    LEFT JOIN vinculo v ON v.cliente_id = c.id
-    LEFT JOIN historico_consulta h ON h.vinculo_id = v.id
+    @Query("""
+    SELECT DISTINCT c
+    FROM Cliente c
+    LEFT JOIN FETCH c.googleSheet gs
+    JOIN c.vinculos v
+    LEFT JOIN v.historicos h
     WHERE c.casa = true
-      AND (h.data_consulta IS NULL OR h.data_consulta <> CURDATE())
-    """, nativeQuery = true)
+      AND (h.dataConsulta IS NULL OR h.dataConsulta <> CURRENT_DATE)
+    """)
     List<Cliente> buscarClientesCasaComVinculosEHistoricos();
 
-    @Query(value = """
-    SELECT DISTINCT c.*
-    FROM cliente c
-    LEFT JOIN vinculo v ON v.cliente_id = c.id
-    LEFT JOIN historico_consulta h ON h.vinculo_id = v.id
+    @Query("""
+    SELECT DISTINCT c
+    FROM Cliente c
+    LEFT JOIN FETCH c.googleSheet gs
+    JOIN c.vinculos v
+    LEFT JOIN v.historicos h
     WHERE c.casa = false
-      AND (h.data_consulta IS NULL OR h.data_consulta <> CURDATE())
-    """, nativeQuery = true)
+      AND (h.dataConsulta IS NULL OR h.dataConsulta <> CURRENT_DATE)
+    """)
     List<Cliente> buscarClientesNaoCasaComVinculosEHistorico();
 
     @Query(value = """
