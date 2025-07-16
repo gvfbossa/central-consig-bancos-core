@@ -17,7 +17,6 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> {
 
     List<Cliente> findByCpfIn(Set<String> cpfs);
 
-    @Transactional
     @Query(value = """
     SELECT DISTINCT c.*
     FROM cliente c
@@ -28,7 +27,6 @@ public interface ClienteRepository extends JpaRepository<Cliente, Long> {
     """, nativeQuery = true)
     List<Cliente> buscarClientesCasaComVinculosEHistoricos();
 
-    @Transactional
     @Query(value = """
     SELECT DISTINCT c.*
     FROM cliente c

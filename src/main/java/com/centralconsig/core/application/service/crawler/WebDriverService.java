@@ -26,7 +26,7 @@ public class WebDriverService {
     public WebDriver criarDriver() {
         String downloadPath = Paths.get(DOWNLOAD_DIR).toAbsolutePath().toString();
         ChromeOptions options = new ChromeOptions();
-        options.addArguments("--headless=new");
+//        options.addArguments("--headless=new");
         options.addArguments("--disable-extensions");
         options.addArguments("--blink-settings=imagesEnabled=false");
         options.addArguments("--no-sandbox");

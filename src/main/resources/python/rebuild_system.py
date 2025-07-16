@@ -143,7 +143,7 @@ def build_and_push_docker(micro_path):
 run_command("Limpando build com Maven", "mvn clean", cwd=ROOT_DIR)
 
 # Commit do core
-commit_msg = input("\nDigite a mensagem do commit para o CORE: ")
+commit_msg = input("\nDigite a mensagem do commit: ")
 git_commit_push(ROOT_DIR, commit_msg)
 
 run_command("Instalando build localmente", "mvn install", cwd=ROOT_DIR)
