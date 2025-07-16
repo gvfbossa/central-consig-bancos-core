@@ -15,7 +15,27 @@ public class GoogleSheetService {
         this.googleSheetRepository = googleSheetRepository;
     }
 
-    public List<GoogleSheet> getAllSheets() {
+    public List<GoogleSheet> findAll() {
         return googleSheetRepository.findAll();
     }
+
+    public GoogleSheet findByFileName(String decodedNome) {
+        return googleSheetRepository.findByFileName(decodedNome);
+    }
+
+    public void delete(GoogleSheet sheet) {
+        googleSheetRepository.delete(sheet);
+    }
+
+    public GoogleSheet save(GoogleSheet sheet) {
+        if (sheet.getFileName().contains(".csv")) {
+            sheet.setFileName(filterFileName(sheet.getFileName()));
+        }
+        return googleSheetRepository.save(sheet);
+    }
+
+    private String filterFileName(String fileName) {
+        return fileName.substring(fileName.indexOf("-") + 1, fileName.indexOf(".csv")).trim();
+    }
+
 }

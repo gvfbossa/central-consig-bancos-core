@@ -3,28 +3,22 @@ package com.centralconsig.core.application.service;
 import com.centralconsig.core.application.dto.response.ClienteResponseDTO;
 import com.centralconsig.core.application.mapper.ClienteMapper;
 import com.centralconsig.core.domain.entity.Cliente;
-import com.centralconsig.core.domain.entity.GoogleSheet;
-import com.centralconsig.core.application.service.GoogleSheetService;
 import com.centralconsig.core.domain.entity.HistoricoConsulta;
 import com.centralconsig.core.domain.entity.Vinculo;
 import com.centralconsig.core.domain.repository.ClienteRepository;
-import jakarta.transaction.Transactional;
 import org.springframework.stereotype.Service;
 
 import java.time.LocalDate;
 import java.util.*;
-import java.util.function.Function;
 import java.util.stream.Collectors;
 
 @Service
 public class ClienteService {
 
     private final ClienteRepository clienteRepository;
-    private final GoogleSheetService googleSheetService;
     private final VinculoService vinculoService;
 
-    public ClienteService(ClienteRepository clienteRepository, VinculoService vinculoService, GoogleSheetService googleSheetService) {
-        this.googleSheetService = googleSheetService;
+    public ClienteService(ClienteRepository clienteRepository, VinculoService vinculoService) {
         this.clienteRepository = clienteRepository;
         this.vinculoService = vinculoService;
     }
