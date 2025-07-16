@@ -182,31 +182,11 @@ public class ClienteService {
     }
 
     public List<Cliente> getClientesCasaComVinculosEHistorico() {
-        List<Cliente> clientes = clienteRepository.buscarClientesCasaComVinculosEHistoricos();
-        List<GoogleSheet> sheets = googleSheetService.getAllSheets();
-        Map<Long, GoogleSheet> sheetsMap = sheets.stream().collect(Collectors.toMap(GoogleSheet::getId, Function.identity()));
-
-        clientes.forEach(c -> {
-            if (c.getGoogleSheet() != null) {
-                GoogleSheet sheet = sheetsMap.get(c.getGoogleSheet().getId());
-                c.setGoogleSheet(sheet);
-            }
-        });
-        return clientes;
+        return clienteRepository.buscarClientesCasaComVinculosEHistoricos();
     }
 
     public List<Cliente> getClientesNaoCasaComVinculosEHistorico() {
-        List<Cliente> clientes = clienteRepository.buscarClientesNaoCasaComVinculosEHistorico();
-        List<GoogleSheet> sheets = googleSheetService.getAllSheets();
-        Map<Long, GoogleSheet> sheetsMap = sheets.stream().collect(Collectors.toMap(GoogleSheet::getId, Function.identity()));
-
-        clientes.forEach(c -> {
-            if (c.getGoogleSheet() != null) {
-                GoogleSheet sheet = sheetsMap.get(c.getGoogleSheet().getId());
-                c.setGoogleSheet(sheet);
-            }
-        });
-        return clientes;
+        return clienteRepository.buscarClientesNaoCasaComVinculosEHistorico();
     }
 
     public List<Cliente> getRelatorioMargensPreenchidasData(LocalDate data) {
