@@ -5,6 +5,8 @@ import org.openqa.selenium.WebDriver;
 import org.openqa.selenium.chrome.ChromeDriver;
 import org.openqa.selenium.chrome.ChromeOptions;
 import org.openqa.selenium.support.ui.WebDriverWait;
+import org.slf4j.Logger;
+import org.slf4j.LoggerFactory;
 import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +24,8 @@ public class WebDriverService {
 
     @Value("${sheet.download.dir:/app/data/spreadsheets}")
     private String DOWNLOAD_DIR;
+
+    private static final Logger log = LoggerFactory.getLogger(WebDriverService.class);
 
     public WebDriver criarDriver() {
         String downloadPath = Paths.get(DOWNLOAD_DIR).toAbsolutePath().toString();
@@ -56,7 +60,9 @@ public class WebDriverService {
             if (driver != null) {
                 driver.close();
             }
-        } catch (Exception ignored) {}
+        } catch (Exception e) {
+            log.error("Erro ao encerrar driver. Erro: " + e.getMessage());
+        }
 
         ExecutorService executor = Executors.newSingleThreadExecutor();
         WebDriver finalDriver = driver;
