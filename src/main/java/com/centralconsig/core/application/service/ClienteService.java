@@ -64,7 +64,6 @@ public class ClienteService {
             existente.setNome(novoCliente.getNome());
             existente.setTelefone(novoCliente.getTelefone());
             existente.setCasa(novoCliente.isCasa());
-//            existente.setGoogleSheet(novoCliente.getGoogleSheet());
             return clienteRepository.saveAndFlush(existente);
         } else {
             return clienteRepository.saveAndFlush(novoCliente);
