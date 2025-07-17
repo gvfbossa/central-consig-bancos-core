@@ -64,7 +64,7 @@ public class ClienteService {
             existente.setNome(novoCliente.getNome());
             existente.setTelefone(novoCliente.getTelefone());
             existente.setCasa(novoCliente.isCasa());
-            existente.setGoogleSheet(novoCliente.getGoogleSheet());
+//            existente.setGoogleSheet(novoCliente.getGoogleSheet());
             return clienteRepository.saveAndFlush(existente);
         } else {
             return clienteRepository.saveAndFlush(novoCliente);
@@ -123,8 +123,8 @@ public class ClienteService {
             }
         }
 
-        clienteRepository.saveAll(novos);
-        clienteRepository.saveAll(atualizaveis);
+        clienteRepository.saveAll(new ArrayList<>(new LinkedHashSet<>(novos)));
+        clienteRepository.saveAll(new ArrayList<>(new LinkedHashSet<>(atualizaveis)));
     }
 
     public List<Cliente> getAllClientes() {
