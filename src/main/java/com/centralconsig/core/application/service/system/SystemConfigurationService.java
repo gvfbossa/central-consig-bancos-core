@@ -16,34 +16,45 @@ public class SystemConfigurationService {
 
     @PostConstruct
     public void init() {
-        if (systemConfigurationRepository.count() == 0) {
+        if (systemConfigurationRepository.count() == 0L) {
             SystemConfiguration config = new SystemConfiguration();
             config.setPropostaAutomatica(false);
             config.setPropostaAutomaticaPlanilha(false);
             systemConfigurationRepository.save(config);
-        } else if (systemConfigurationRepository.count() > 1) {
+        } else if (systemConfigurationRepository.count() > 1L) {
             systemConfigurationRepository.deleteAll(systemConfigurationRepository.findAll().subList(1, systemConfigurationRepository.findAll().size()));
         }
     }
 
     public void atualizaValorPropostaAutomatica() {
-        SystemConfiguration systemConfiguration = systemConfigurationRepository.findAll().getFirst();
-        systemConfiguration.setPropostaAutomatica(!systemConfiguration.isPropostaAutomatica());
-        systemConfigurationRepository.save(systemConfiguration);
+        SystemConfiguration config = systemConfigurationRepository.findAll().getFirst();
+        boolean ativando = !config.isPropostaAutomatica();
+        config.setPropostaAutomatica(ativando);
+
+        if (ativando && config.isPropostaAutomaticaPlanilha()) {
+            config.setPropostaAutomaticaPlanilha(false);
+        }
+
+        systemConfigurationRepository.save(config);
+    }
+
+    public void atualizaValorPropostaAutomaticaPlanilha() {
+        SystemConfiguration config = systemConfigurationRepository.findAll().getFirst();
+        boolean ativando = !config.isPropostaAutomaticaPlanilha();
+        config.setPropostaAutomaticaPlanilha(ativando);
+
+        if (ativando && config.isPropostaAutomatica()) {
+            config.setPropostaAutomatica(false);
+        }
+
+        systemConfigurationRepository.save(config);
     }
 
     public boolean isPropostaAutomaticaAtiva() {
         return systemConfigurationRepository.findAll().getFirst().isPropostaAutomatica();
     }
 
-    public void atualizaValorPropostaAutomaticaPlanilha() {
-        SystemConfiguration systemConfiguration = systemConfigurationRepository.findAll().getFirst();
-        systemConfiguration.setPropostaAutomaticaPlanilha(!systemConfiguration.isPropostaAutomaticaPlanilha());
-        systemConfigurationRepository.save(systemConfiguration);
-    }
-
     public boolean isPropostaAutomaticaPlanilhaAtiva() {
         return systemConfigurationRepository.findAll().getFirst().isPropostaAutomaticaPlanilha();
     }
-
 }
