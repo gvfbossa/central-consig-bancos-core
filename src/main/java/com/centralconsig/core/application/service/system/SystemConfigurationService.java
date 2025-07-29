@@ -19,11 +19,11 @@ public class SystemConfigurationService {
         if (systemConfigurationRepository.count() == 0) {
             SystemConfiguration config = new SystemConfiguration();
             config.setPropostaAutomatica(false);
+            config.setPropostaAutomaticaPlanilha(false);
             systemConfigurationRepository.save(config);
         } else if (systemConfigurationRepository.count() > 1) {
             systemConfigurationRepository.deleteAll(systemConfigurationRepository.findAll().subList(1, systemConfigurationRepository.findAll().size()));
         }
-
     }
 
     public void atualizaValorPropostaAutomatica() {
@@ -34,6 +34,16 @@ public class SystemConfigurationService {
 
     public boolean isPropostaAutomaticaAtiva() {
         return systemConfigurationRepository.findAll().getFirst().isPropostaAutomatica();
+    }
+
+    public void atualizaValorPropostaAutomaticaPlanilha() {
+        SystemConfiguration systemConfiguration = systemConfigurationRepository.findAll().getFirst();
+        systemConfiguration.setPropostaAutomaticaPlanilha(!systemConfiguration.isPropostaAutomaticaPlanilha());
+        systemConfigurationRepository.save(systemConfiguration);
+    }
+
+    public boolean isPropostaAutomaticaPlanilhaAtiva() {
+        return systemConfigurationRepository.findAll().getFirst().isPropostaAutomaticaPlanilha();
     }
 
 }

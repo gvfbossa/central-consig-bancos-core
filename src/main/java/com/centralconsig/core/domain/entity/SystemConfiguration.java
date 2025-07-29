@@ -17,4 +17,7 @@ public class SystemConfiguration {
     @Column(name = "proposta_automatica")
     private boolean propostaAutomatica;
 
+    @Column(name = "proposta_automatica_planilha")
+    private boolean propostaAutomaticaPlanilha;
+
 }
