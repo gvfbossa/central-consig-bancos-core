@@ -1,5 +1,8 @@
 package com.centralconsig.core.application.service.system;
 
+import com.centralconsig.core.application.dto.request.SystemConfigurationRequestDTO;
+import com.centralconsig.core.application.dto.response.SystemConfigurationResponseDTO;
+import com.centralconsig.core.application.mapper.SystemConfigurationMapper;
 import com.centralconsig.core.domain.entity.SystemConfiguration;
 import com.centralconsig.core.domain.repository.SystemConfigurationRepository;
 import jakarta.annotation.PostConstruct;
@@ -26,35 +29,15 @@ public class SystemConfigurationService {
         }
     }
 
-    public void atualizaValorPropostaAutomatica() {
+    public void atualizaValorPropostaAutomatica(SystemConfigurationRequestDTO responseDTO) {
         SystemConfiguration config = systemConfigurationRepository.findAll().getFirst();
-        boolean ativando = !config.isPropostaAutomatica();
-        config.setPropostaAutomatica(ativando);
-
-        if (ativando && config.isPropostaAutomaticaPlanilha()) {
-            config.setPropostaAutomaticaPlanilha(false);
-        }
-
+        config.setPropostaAutomatica(responseDTO.isPropostaAutomatica());
+        config.setPropostaAutomaticaPlanilha(responseDTO.isPropostaAutomaticaPlanilha());
         systemConfigurationRepository.save(config);
     }
 
-    public void atualizaValorPropostaAutomaticaPlanilha() {
-        SystemConfiguration config = systemConfigurationRepository.findAll().getFirst();
-        boolean ativando = !config.isPropostaAutomaticaPlanilha();
-        config.setPropostaAutomaticaPlanilha(ativando);
-
-        if (ativando && config.isPropostaAutomatica()) {
-            config.setPropostaAutomatica(false);
-        }
-
-        systemConfigurationRepository.save(config);
+    public SystemConfigurationResponseDTO isPropostaAutomaticaAtiva() {
+        return SystemConfigurationMapper.toDto(systemConfigurationRepository.findAll().getFirst());
     }
 
-    public boolean isPropostaAutomaticaAtiva() {
-        return systemConfigurationRepository.findAll().getFirst().isPropostaAutomatica();
-    }
-
-    public boolean isPropostaAutomaticaPlanilhaAtiva() {
-        return systemConfigurationRepository.findAll().getFirst().isPropostaAutomaticaPlanilha();
-    }
 }
