@@ -36,7 +36,7 @@ public class SystemConfigurationService {
         systemConfigurationRepository.save(config);
     }
 
-    public SystemConfigurationResponseDTO isPropostaAutomaticaAtiva() {
+    public SystemConfigurationResponseDTO getSystemConfigurations() {
         return SystemConfigurationMapper.toDto(systemConfigurationRepository.findAll().getFirst());
     }
 
